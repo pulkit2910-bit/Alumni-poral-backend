@@ -32,6 +32,14 @@ const AlumiSchema = mongoose.Schema(
             type : Array,
             default : []
         },
+        rollNumber : {
+            type : String,
+            required : true
+        },
+        dob : {
+            type : Date,
+            required : true
+        },
         address : {
             type : String,
             default : "",
@@ -41,7 +49,7 @@ const AlumiSchema = mongoose.Schema(
             type : String,
             required: true,
         },
-        phonenumber : {
+        phoneNumber : {
             type : String,
             required: true,
         },
@@ -58,7 +66,7 @@ const AlumiSchema = mongoose.Schema(
                 type : String,
                 default : ""
             }
-        }
+        },
     },
     {timestamps : true}
 )
