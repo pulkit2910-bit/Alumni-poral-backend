@@ -32,30 +32,21 @@ exports.registerUser = catchAsyncError(async (req, res, next) => {
     res.status(200).json(user);   
 })
 
-exports.loginUser = async (req, res, next) => {
+exports.loginUser = catchAsyncError(async (req, res, next) => {
     const {rollNumber, password} = req.body;
-
-    try {
-        // Find user in MongoDB
-        const user = await Alumni.findOne({rollNumber : rollNumber});
-        !user && res.status(404).json({
-            message : 'User not Found !',
-            status : 404
-        });
-
-        // Validate Password
-        const validatePassword = await bcrypt.compare(password, user.password);
-        !validatePassword && res.status(400).json({
-            message : "Incorrect password",
-            status : 400
-        });
-        
-        sendToken(user, 200, res);
-
-    } catch(err) {
-        console.log(err)
+    // Find user in MongoDB
+    const user = await Alumni.findOne({rollNumber : rollNumber});
+    if (!user) {
+        return next(new ErrorHandler("User not found", 404));
     }
-}
+    // Validate Password
+    const validatePassword = await bcrypt.compare(password, user.password);
+    if (!validatePassword) {
+        return next(new ErrorHandler("Incorrect Password", 400));
+    }
+    
+    sendToken(user, 200, res);
+})
 
 exports.logoutUser = async (req, res) => {
     res.clearCookie('token');
