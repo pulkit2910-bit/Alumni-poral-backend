@@ -20,6 +20,7 @@ const AlumiSchema = mongoose.Schema(
         email : {
             type : String,
             required : true,
+            unique: true,
             max: 50
         },
         password : {
@@ -34,25 +35,26 @@ const AlumiSchema = mongoose.Schema(
         },
         rollNumber : {
             type : String,
+            unique: true,
             required : true
         },
-        dob : {
-            type : Date,
-            required : true
-        },
+        // dob : {
+        //     type : Date,
+        //     required : true
+        // },
         address : {
             type : String,
             default : "",
             max : 150
         },
-        countryCode : {
-            type : String,
-            required: true,
-        },
-        phoneNumber : {
-            type : String,
-            required: true,
-        },
+        // countryCode : {
+        //     type : String,
+        //     required: true,
+        // },
+        // phoneNumber : {
+        //     type : String,
+        //     required: true,
+        // },
         socialMediaLinks : {
             linkedin : {
                 type : String,

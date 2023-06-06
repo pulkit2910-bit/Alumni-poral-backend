@@ -1,39 +1,63 @@
 const Alumni = require("../models/Alumni");
 const bcrypt = require('bcryptjs');
 const { sendToken } = require("../utils/sendToken")
+const ErrorHandler = require("../utils/errorHandler");
+const catchAsyncError = require("../middlewares/catchAsyncError")
 
-exports.registerUser = async (req, res) => {
+exports.registerUser = catchAsyncError(async (req, res, next) => {    
+    const findUser = await Alumni.findOne({ rollNumber : req.body.rollNumber });
+    if (findUser) { 
+        return next(new ErrorHandler("User already exists", 409));
+    }
+
     const file = req.file;
+    const hashPassword = await bcrypt.hash(req.body.password, 10);
     
+    var newUser;
+    if (file) {
+        // add cloudinary and multer
+    } else {
+        newUser = await new Alumni({
+            name : req.body.name,
+            email: req.body.email,
+            password : hashPassword,
+            rollNumber : req.body.rollNumber,
+            dob : req.body.dob,
+            address : req.body.address,
+            countryCode : req.body.countryCode,
+            phoneNumber : req.body.phoneNumber,
+        });
+    }
+    const user = await newUser.save();
+    res.status(200).json(user);   
+})
+
+exports.loginUser = async (req, res, next) => {
+    const {rollNumber, password} = req.body;
+
     try {
-        const hashPassword = await bcrypt.hash(req.body.password, 10);
+        // Find user in MongoDB
+        const user = await Alumni.findOne({rollNumber : rollNumber});
+        !user && res.status(404).json({
+            message : 'User not Found !',
+            status : 404
+        });
+
+        // Validate Password
+        const validatePassword = await bcrypt.compare(password, user.password);
+        !validatePassword && res.status(400).json({
+            message : "Incorrect password",
+            status : 400
+        });
         
-        var newUser;
-        if (file) {
-            // add cloudinary and multer
-        } else {
-            newUser = await new Alumni({
-                name : req.body.name,
-                email: req.body.email,
-                password : hashPassword,
-                rollNumber : req.body.rollNumber,
-                dob : req.body.dob,
-                address : req.body.address,
-                countryCode : req.body.countryCode,
-                phoneNumber : req.body.phoneNumber,
-            });
-        }
-        const user = await newUser.save();
-        res.status(200).json(user);   
+        sendToken(user, 200, res);
+
     } catch(err) {
-        res.status(500).json(err);
+        console.log(err)
     }
 }
 
-exports.loginUser = async (req, res) => {
-    
-}
-
 exports.logoutUser = async (req, res) => {
-
+    res.clearCookie('token');
+    res.status(200).json('User has been logged out !');
 }

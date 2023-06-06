@@ -10,7 +10,12 @@ dotenv.config();
 
 // MongoDB connect
 mongoose.set('strictQuery', false);
-mongoose.connect(process.env.MONGO_URL)
+mongoose
+    .connect(process.env.MONGO_URL, {
+        useUnifiedTopology: true,
+        useNewUrlParser: true,
+        autoIndex: true,
+    })
     .then((res) => {
         console.log('Connected to MongoDB');
     })
@@ -18,9 +23,10 @@ mongoose.connect(process.env.MONGO_URL)
         console.log(err);
     })
 
-
+    
 // Routes
 const authRoute = require("./routes/auth");
+const errorMiddleware = require('./middlewares/errorMiddleware');
 
 app.use(express.json());
 app.use(helmet());
@@ -34,3 +40,5 @@ app.use('/api/auth', authRoute);
 app.listen(8000, () => {
     console.log('Server running at port 8000');
 })
+
+app.use(errorMiddleware);
