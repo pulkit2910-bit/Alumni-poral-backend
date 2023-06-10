@@ -2,7 +2,7 @@ const Alumni = require("../models/Alumni");
 const bcrypt = require('bcryptjs');
 const { sendToken } = require("../utils/sendToken")
 const ErrorHandler = require("../utils/errorHandler");
-const catchAsyncError = require("../middlewares/catchAsyncError")
+const catchAsyncError = require("../middlewares/catchAsyncError");
 
 exports.registerUser = catchAsyncError(async (req, res, next) => {    
     const findUser = await Alumni.findOne({ rollNumber : req.body.rollNumber });
@@ -33,7 +33,7 @@ exports.registerUser = catchAsyncError(async (req, res, next) => {
 })
 
 exports.loginUser = catchAsyncError(async (req, res, next) => {
-    const {rollNumber, password} = req.body;
+    const { rollNumber, password } = req.body;
     // Find user in MongoDB
     const user = await Alumni.findOne({rollNumber : rollNumber});
     if (!user) {

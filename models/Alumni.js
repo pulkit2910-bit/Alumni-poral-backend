@@ -23,21 +23,25 @@ const AlumiSchema = mongoose.Schema(
             unique: true,
             max: 50
         },
+        altEmail : {
+            type : String,
+            default : ""
+        },
         password : {
             type : String,
             required : true,
             min : 6,
             max: 20
         },
-        connections : {
-            type : Array,
-            default : []
-        },
         rollNumber : {
             type : String,
             unique: true,
             required : true
         },
+        // batch : {
+        //     type : Date,
+        //     required :true,
+        // }
         // dob : {
         //     type : Date,
         //     required : true
@@ -47,28 +51,65 @@ const AlumiSchema = mongoose.Schema(
             default : "",
             max : 150
         },
-        // countryCode : {
-        //     type : String,
+        // phoneNo : {
+        //     type : Number,
         //     required: true,
         // },
-        // phoneNumber : {
-        //     type : String,
-        //     required: true,
-        // },
-        socialMediaLinks : {
-            linkedin : {
-                type : String,
-                default : ""
-            },
-            instagram : {
-                type: String,
-                default : ""
-            },
-            github : {
-                type : String,
-                default : ""
-            }
+        altPhoneNo : {
+            type : Number,
+            default : null
         },
+        title : {
+            type : String,
+        },
+        location : {
+            type : String,
+        },
+        skills : [{
+            type: String,
+        }],
+        about : {
+            type : String,
+        },
+        experience : [{
+            company : {
+                type : String,
+            },
+            position : {
+                type : String,
+            },
+            startDate : {
+                type : Date,
+            },
+            endDate : {
+                type : Date,
+            }
+        }],
+        education : [{
+            institution : {
+                type : String,
+            },
+            degree : {
+                type : String,
+            },
+            startDate : {
+                type : Date,
+            },
+            endDate : {
+                type : Date,
+            }
+        }],
+        socialHandles : [{
+            socialmedianame : {
+                type : String,
+            }, 
+            profilelink : {
+                type : String,
+            }
+        }], 
+        achievements : [{
+            type : String,
+        }]
     },
     {timestamps : true}
 )

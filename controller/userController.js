@@ -1,0 +1,89 @@
+const Alumni = require("../models/Alumni");
+const ErrorHandler = require("../utils/errorHandler");
+const catchAsyncError = require("../middlewares/catchAsyncError");
+
+exports.getUser = catchAsyncError(async (req, res, next) => {
+    const user = await Alumni.findById(req.query.userID);
+    if (!user) {
+        return next(new ErrorHandler("User not found", 404));
+    }
+
+    res.status(200).json(user);
+})
+
+exports.deleteUser = catchAsyncError(async (req, res) => {
+    if (req.data.userID === req.params.userID) {
+        await User.findByIdAndDelete(req.params.userID);
+        res.status(200).json("User Deleted !");
+    } else {
+      res.status(403).json("You are not allowed to delete this user");
+    }
+})
+
+// update basic details
+exports.updateUser = catchAsyncError(async (req, res) => {
+    const userID = req.data.userID;
+    const updateFields = {};
+    
+    if (req.body.name) updateFields.name = req.body.name;
+    if (req.body.title) updateFields.title = req.body.title;
+    if (req.body.location) updateFields.location = req.body.location;
+    if (req.body.about) updateFields.about = req.body.about;
+    if (req.body.skills) updateFields.skills = req.body.skills;
+
+    await Alumni.updateOne({ _id :userID }, { $set : updateFields });
+    const user = Alumni.findById(userID);
+    res.status(200).json(user);
+})
+
+// update education details
+exports.updateEducation = catchAsyncError(async (req, res) => {
+    const userID = req.data.userID;
+    const updateFields = {};
+    
+    if (req.body.education) updateFields.education = req.body.education;
+
+    await Alumni.updateOne({ _id :userID }, { $set : updateFields });
+    const user = Alumni.findById(userID);
+    res.status(200).json(user);
+})
+
+// update experience details
+exports.updateExperience = catchAsyncError(async (req, res) => {
+    const userID = req.data.userID;
+    const updateFields = {};
+    
+    if (req.body.experience) updateFields.experience = req.body.experience;
+
+    await Alumni.updateOne({ _id :userID }, { $set : updateFields });
+    const user = Alumni.findById(userID);
+    res.status(200).json(user);
+})
+
+// update contact details
+exports.updateContact = catchAsyncError(async (req, res) => {
+    const userID = req.data.userID;
+    const updateFields = {};
+    
+    if (req.body.email) updateFields.email = req.body.email;
+    if (req.body.altEmail) updateFields.altEmail = req.body.altEmail;
+    if (req.body.phoneNo) updateFields.phoneNo = req.body.phoneNo;
+    if (req.body.altPhoneNo) updateFields.altPhoneNo = req.body.altPhoneNo;
+    if (req.body.socialHandles) updateFields.socialHandles = req.body.socialHandles;
+
+    await Alumni.updateOne({ _id :userID }, { $set : updateFields });
+    const user = Alumni.findById(userID);
+    res.status(200).json(user);
+})
+
+// update achievements details
+exports.updateAchievements = catchAsyncError(async (req, res) => {
+    const userID = req.data.userID;
+    const updateFields = {};
+    
+    if (req.body.achievements) updateFields.achievements = req.body.achievements;
+
+    await Alumni.updateOne({ _id :userID }, { $set : updateFields });
+    const user = Alumni.findById(userID);
+    res.status(200).json(user);
+})

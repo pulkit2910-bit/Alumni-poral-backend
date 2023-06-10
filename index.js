@@ -23,9 +23,9 @@ mongoose
         console.log(err);
     })
 
-    
 // Routes
 const authRoute = require("./routes/auth");
+const userRoute = require("./routes/user");
 const errorMiddleware = require('./middlewares/errorMiddleware');
 
 app.use(express.json());
@@ -36,6 +36,9 @@ app.use(cookieParser());
 
 // Auth
 app.use('/api/auth', authRoute);
+
+// User
+app.use('/api/user', userRoute);
 
 app.listen(8000, () => {
     console.log('Server running at port 8000');

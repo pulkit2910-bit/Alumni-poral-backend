@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const ErrorHandler = require('../utils/errorHandler');
 
 const verifyUser = (req, res, next) => {
     const { token } = req.cookies;
@@ -6,7 +7,7 @@ const verifyUser = (req, res, next) => {
     
     jwt.verify(token, process.env.JWT_ACCESS_KEY, (err, payload) => {
         if (err) {
-            return res.status(403).json('Invalid Token');
+            return next(new ErrorHandler("Invalid Token", 403));
         } 
         else {
             req.data = payload;
