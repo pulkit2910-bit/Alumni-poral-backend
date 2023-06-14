@@ -30,7 +30,7 @@ const AlumiSchema = mongoose.Schema(
         password : {
             type : String,
             required : true,
-            min : 6,
+            min : 4,
             max: 20
         },
         rollNumber : {
@@ -42,19 +42,19 @@ const AlumiSchema = mongoose.Schema(
         //     type : Date,
         //     required :true,
         // }
-        // dob : {
-        //     type : Date,
-        //     required : true
-        // },
+        dob : {
+            type : Date,
+            required : true
+        },
         address : {
             type : String,
             default : "",
             max : 150
         },
-        // phoneNo : {
-        //     type : Number,
-        //     required: true,
-        // },
+        phoneNo : {
+            type : Number,
+            default : null,
+        },
         altPhoneNo : {
             type : Number,
             default : null

@@ -39,9 +39,9 @@ exports.updateUser = catchAsyncError(async (req, res) => {
 // update education details
 exports.updateEducation = catchAsyncError(async (req, res) => {
     const userID = req.data.userID;
-    const updateFields = {};
-    
-    if (req.body.education) updateFields.education = req.body.education;
+    const updateFields = {
+        education : req.body
+    };
 
     await Alumni.updateOne({ _id :userID }, { $set : updateFields });
     const user = await Alumni.findById(userID);
@@ -51,9 +51,9 @@ exports.updateEducation = catchAsyncError(async (req, res) => {
 // update experience details
 exports.updateExperience = catchAsyncError(async (req, res) => {
     const userID = req.data.userID;
-    const updateFields = {};
-    
-    if (req.body.experience) updateFields.experience = req.body.experience;
+    const updateFields = {
+        experience : req.body
+    };
 
     await Alumni.updateOne({ _id :userID }, { $set : updateFields });
     const user = await Alumni.findById(userID);
@@ -79,9 +79,9 @@ exports.updateContact = catchAsyncError(async (req, res) => {
 // update achievements details
 exports.updateAchievements = catchAsyncError(async (req, res) => {
     const userID = req.data.userID;
-    const updateFields = {};
-    
-    if (req.body.achievements) updateFields.achievements = req.body.achievements;
+    const updateFields = {
+        achievements : req.body
+    };
 
     await Alumni.updateOne({ _id :userID }, { $set : updateFields });
     const user = await Alumni.findById(userID);
