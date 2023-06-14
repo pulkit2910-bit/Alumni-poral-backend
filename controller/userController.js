@@ -32,7 +32,7 @@ exports.updateUser = catchAsyncError(async (req, res) => {
     if (req.body.skills) updateFields.skills = req.body.skills;
 
     await Alumni.updateOne({ _id :userID }, { $set : updateFields });
-    const user = Alumni.findById(userID);
+    const user = await Alumni.findById(userID);
     res.status(200).json(user);
 })
 
@@ -44,7 +44,7 @@ exports.updateEducation = catchAsyncError(async (req, res) => {
     if (req.body.education) updateFields.education = req.body.education;
 
     await Alumni.updateOne({ _id :userID }, { $set : updateFields });
-    const user = Alumni.findById(userID);
+    const user = await Alumni.findById(userID);
     res.status(200).json(user);
 })
 
@@ -56,7 +56,7 @@ exports.updateExperience = catchAsyncError(async (req, res) => {
     if (req.body.experience) updateFields.experience = req.body.experience;
 
     await Alumni.updateOne({ _id :userID }, { $set : updateFields });
-    const user = Alumni.findById(userID);
+    const user = await Alumni.findById(userID);
     res.status(200).json(user);
 })
 
@@ -72,7 +72,7 @@ exports.updateContact = catchAsyncError(async (req, res) => {
     if (req.body.socialHandles) updateFields.socialHandles = req.body.socialHandles;
 
     await Alumni.updateOne({ _id :userID }, { $set : updateFields });
-    const user = Alumni.findById(userID);
+    const user = await Alumni.findById(userID);
     res.status(200).json(user);
 })
 
@@ -84,6 +84,6 @@ exports.updateAchievements = catchAsyncError(async (req, res) => {
     if (req.body.achievements) updateFields.achievements = req.body.achievements;
 
     await Alumni.updateOne({ _id :userID }, { $set : updateFields });
-    const user = Alumni.findById(userID);
+    const user = await Alumni.findById(userID);
     res.status(200).json(user);
 })

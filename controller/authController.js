@@ -5,7 +5,7 @@ const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncError = require("../middlewares/catchAsyncError");
 
 exports.registerUser = catchAsyncError(async (req, res, next) => {    
-    const findUser = await Alumni.findOne({ rollNumber : req.body.rollNumber });
+    const findUser = await Alumni.findOne({ email : req.body.email });
     if (findUser) { 
         return next(new ErrorHandler("User already exists", 409));
     }
@@ -24,7 +24,6 @@ exports.registerUser = catchAsyncError(async (req, res, next) => {
             rollNumber : req.body.rollNumber,
             dob : req.body.dob,
             address : req.body.address,
-            countryCode : req.body.countryCode,
             phoneNumber : req.body.phoneNumber,
         });
     }
@@ -33,9 +32,9 @@ exports.registerUser = catchAsyncError(async (req, res, next) => {
 })
 
 exports.loginUser = catchAsyncError(async (req, res, next) => {
-    const { rollNumber, password } = req.body;
+    const { email, password } = req.body;
     // Find user in MongoDB
-    const user = await Alumni.findOne({rollNumber : rollNumber});
+    const user = await Alumni.findOne({email : email});
     if (!user) {
         return next(new ErrorHandler("User not found", 404));
     }
