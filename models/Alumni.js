@@ -38,10 +38,14 @@ const AlumiSchema = mongoose.Schema(
             unique: true,
             required : true
         },
-        // batch : {
-        //     type : Date,
-        //     required :true,
-        // }
+        degree : {
+            type : String, 
+            required : true
+        },
+        batch : {
+            type : String,
+            required :true,
+        },
         dob : {
             type : Date,
             required : true
@@ -61,15 +65,23 @@ const AlumiSchema = mongoose.Schema(
         },
         title : {
             type : String,
+            default : ""
         },
         location : {
             type : String,
+            default : ""
         },
         skills : [{
             type: String,
+            default : ""
         }],
         about : {
             type : String,
+            default : ""
+        },
+        company : {
+            type : String,
+            default : ""
         },
         experience : [{
             company : {

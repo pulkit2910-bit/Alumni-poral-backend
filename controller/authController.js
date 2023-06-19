@@ -10,6 +10,14 @@ exports.registerUser = catchAsyncError(async (req, res, next) => {
         return next(new ErrorHandler("User already exists", 409));
     }
 
+    let degree = "", batch="20";
+    [...rollNumber].forEach(e => {
+        if (e >= 'A' && e <= 'Z') degree += e;
+    });
+    batch += rollNumber.slice(-2);
+
+    console.log(degree + " " + batch);
+
     const file = req.file;
     const hashPassword = await bcrypt.hash(req.body.password, 10);
     
@@ -22,13 +30,15 @@ exports.registerUser = catchAsyncError(async (req, res, next) => {
             email: req.body.email,
             password : hashPassword,
             rollNumber : req.body.rollNumber,
+            degree : degree,
+            batch : batch,
             dob : req.body.dob,
             address : req.body.address,
             phoneNumber : req.body.phoneNumber,
         });
     }
     const user = await newUser.save();
-    res.status(200).json(user);   
+    sendToken(user, 200, res); 
 })
 
 exports.loginUser = catchAsyncError(async (req, res, next) => {

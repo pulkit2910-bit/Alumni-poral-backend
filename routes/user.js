@@ -1,9 +1,12 @@
 const router = require('express').Router();
-const { getUser, updateEducation, deleteUser, updateUser, updateExperience, updateContact, updateAchievements } = require('../controller/userController');
+const { getUser, updateEducation, deleteUser, updateUser, updateExperience, updateContact, updateAchievements, getAllUsers } = require('../controller/userController');
 const { verifyUser } = require("../middlewares/authMiddleware");
 
 // get a user
 router.get('/', verifyUser, getUser);
+
+// get all users
+router.get('/search', verifyUser, getAllUsers);
 
 // delete user
 router.delete('/delete/:userID', verifyUser, deleteUser);
