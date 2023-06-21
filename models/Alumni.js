@@ -14,7 +14,7 @@ const AlumiSchema = mongoose.Schema(
             },
             url: {
               type: String,
-              default: "https://res.cloudinary.com/dcz9grvnh/image/upload/v1678971457/profile-unfilled_mseeo9.png"
+              default: "https://res.cloudinary.com/dyjrkaa4n/image/upload/v1687263844/blank-profile-picture-973460_1280_eq15zs.png"
             }
         },
         email : {

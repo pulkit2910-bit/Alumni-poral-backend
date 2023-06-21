@@ -1,6 +1,8 @@
 const Alumni = require("../models/Alumni");
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncError = require("../middlewares/catchAsyncError");
+const { getDataUri } = require("../utils/dataUri");
+const cloudinary = require("cloudinary");
 
 exports.getUser = catchAsyncError(async (req, res, next) => {
     const user = await Alumni.findById(req.query.userID);
@@ -32,6 +34,13 @@ exports.deleteUser = catchAsyncError(async (req, res) => {
 // update basic details
 exports.updateUser = catchAsyncError(async (req, res) => {
     const userID = req.data.userID;
+
+    const currUser = await Alumni.findById(userID);
+    const profilePicID = currUser.avatar.public_id
+    if (profilePicID) {
+        await cloudinary.v2.uploader.destroy(profilePicID);
+    }
+
     const updateFields = {};
     
     if (req.body.name) updateFields.name = req.body.name;
@@ -39,6 +48,16 @@ exports.updateUser = catchAsyncError(async (req, res) => {
     if (req.body.location) updateFields.location = req.body.location;
     if (req.body.about) updateFields.about = req.body.about;
     if (req.body.skills) updateFields.skills = req.body.skills;
+    if (req.file) {
+        const file = req.file;
+        const fileUri = getDataUri(file);
+        const cloud = await cloudinary.v2.uploader.upload(fileUri.content);
+        // console.log(cloud);
+        updateFields.avatar = {
+            public_id : cloud.public_id,
+            url : cloud.secure_url
+        }
+    }
 
     await Alumni.updateOne({ _id :userID }, { $set : updateFields });
     const user = await Alumni.findById(userID);

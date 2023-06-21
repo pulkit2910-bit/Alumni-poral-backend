@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { getUser, updateEducation, deleteUser, updateUser, updateExperience, updateContact, updateAchievements, getAllUsers } = require('../controller/userController');
 const { verifyUser } = require("../middlewares/authMiddleware");
+const { singleUpload } = require("../middlewares/multer");
 
 // get a user
 router.get('/', verifyUser, getUser);
@@ -12,7 +13,7 @@ router.get('/search', verifyUser, getAllUsers);
 router.delete('/delete/:userID', verifyUser, deleteUser);
 
 // update basic user details
-router.put('/edit-profile', verifyUser, updateUser);
+router.put('/edit-profile', verifyUser, singleUpload, updateUser);
 
 // update education details
 router.put('/edit-profile/education', verifyUser, updateEducation);

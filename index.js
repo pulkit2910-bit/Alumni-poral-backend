@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan'); // for logging requests
 const dotenv = require('dotenv');
 const app = express();
+const cloudinary = require("cloudinary");
 dotenv.config();
 
 // MongoDB connect
@@ -22,6 +23,12 @@ mongoose
     .catch((err) => {
         console.log(err);
     })
+
+cloudinary.config({ 
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 // Routes
 const authRoute = require("./routes/auth");
