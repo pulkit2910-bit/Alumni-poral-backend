@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
-const AlumiSchema = mongoose.Schema(
+const UserSchema = mongoose.Schema(
     {
+        role : {
+            type : String,
+            required : true,
+        },
         name : {
             type : String,
             required: true,
@@ -126,4 +130,4 @@ const AlumiSchema = mongoose.Schema(
     {timestamps : true}
 )
 
-module.exports = mongoose.model('Alumni', AlumiSchema);
+module.exports = mongoose.model('User', UserSchema);

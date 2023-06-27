@@ -6,7 +6,7 @@ const sendToken = (user, statusCode, res) => {
     exp.setDate(today.getDate() + 30);
 
     const token = jwt.sign(
-        { userID: `${user._id}`, isAdmin: `${user.isAdmin}` }, 
+        { userID: `${user._id}`, role: `${user.role}` }, 
         process.env.JWT_ACCESS_KEY,
         { expiresIn: parseInt(exp.getTime() / 1000) } 
     );
@@ -16,10 +16,7 @@ const sendToken = (user, statusCode, res) => {
         httpOnly: true
     };
 
-    res.status(statusCode).cookie('token', token, options).json({
-        user,
-        token
-    });
+    res.status(statusCode).cookie('token', token, options).json({user});
 }
 
 module.exports = { sendToken };

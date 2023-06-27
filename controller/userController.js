@@ -1,11 +1,11 @@
-const Alumni = require("../models/Alumni");
+const User = require("../models/User");
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncError = require("../middlewares/catchAsyncError");
 const { getDataUri } = require("../utils/dataUri");
 const cloudinary = require("cloudinary");
 
 exports.getUser = catchAsyncError(async (req, res, next) => {
-    const user = await Alumni.findById(req.query.userID);
+    const user = await User.findById(req.query.userID);
     if (!user) {
         return next(new ErrorHandler("User not found", 404));
     }
@@ -13,11 +13,35 @@ exports.getUser = catchAsyncError(async (req, res, next) => {
     res.status(200).json(user);
 })
 
+exports.getAlumni = catchAsyncError(async (req, res) => {
+    const perPage = 10; // 50
+    const pageNumber = req.query.page;
+    const skipPages = perPage * (pageNumber-1);
+    const users = await User.find({ role: 'alumni' }).sort({ name : "asc" }).limit(perPage).skip(skipPages);
+    res.status(200).json(users);
+})
+
+exports.getCurrStudents = catchAsyncError(async (req, res) => {
+    const perPage = 10; // 50
+    const pageNumber = req.query.page;
+    const skipPages = perPage * (pageNumber-1);
+    const users = await User.find({ role: 'current_students' }).sort({ name : "asc" }).limit(perPage).skip(skipPages);
+    res.status(200).json(users);
+})
+
+exports.getOutgoingStudents = catchAsyncError(async (req, res) => {
+    const perPage = 10; // 50
+    const pageNumber = req.query.page;
+    const skipPages = perPage * (pageNumber-1);
+    const users = await User.find({ role: 'outgoing_students' }).sort({ name : "asc" }).limit(perPage).skip(skipPages);
+    res.status(200).json(users);
+})
+
 exports.getAllUsers = catchAsyncError(async (req, res, next) => {
     const perPage = 10; // 50
     const pageNumber = req.query.page;
     const skipPages = perPage * (pageNumber-1);
-    const users = await Alumni.find().sort({ name : "asc" }).limit(perPage).skip(skipPages);
+    const users = await User.find().sort({ name : "asc" }).limit(perPage).skip(skipPages);
 
     res.status(200).json(users);
 })
@@ -35,7 +59,7 @@ exports.deleteUser = catchAsyncError(async (req, res) => {
 exports.updateUser = catchAsyncError(async (req, res) => {
     const userID = req.data.userID;
 
-    const currUser = await Alumni.findById(userID);
+    const currUser = await User.findById(userID);
     const profilePicID = currUser.avatar.public_id
     if (profilePicID) {
         await cloudinary.v2.uploader.destroy(profilePicID);
@@ -59,8 +83,8 @@ exports.updateUser = catchAsyncError(async (req, res) => {
         }
     }
 
-    await Alumni.updateOne({ _id :userID }, { $set : updateFields });
-    const user = await Alumni.findById(userID);
+    await User.updateOne({ _id :userID }, { $set : updateFields });
+    const user = await User.findById(userID);
     res.status(200).json(user);
 })
 
@@ -71,8 +95,8 @@ exports.updateEducation = catchAsyncError(async (req, res) => {
         education : req.body
     };
 
-    await Alumni.updateOne({ _id :userID }, { $set : updateFields });
-    const user = await Alumni.findById(userID);
+    await User.updateOne({ _id :userID }, { $set : updateFields });
+    const user = await User.findById(userID);
     res.status(200).json(user);
 })
 
@@ -85,8 +109,8 @@ exports.updateExperience = catchAsyncError(async (req, res) => {
     };
     if (currCompany.length > 0) updateFields.company = currCompany[0].company;
 
-    await Alumni.updateOne({ _id :userID }, { $set : updateFields });
-    const user = await Alumni.findById(userID);
+    await User.updateOne({ _id :userID }, { $set : updateFields });
+    const user = await User.findById(userID);
     res.status(200).json(user);
 })
 
@@ -101,8 +125,8 @@ exports.updateContact = catchAsyncError(async (req, res) => {
     if (req.body.altPhoneNo) updateFields.altPhoneNo = req.body.altPhoneNo;
     if (req.body.socialHandles) updateFields.socialHandles = req.body.socialHandles;
 
-    await Alumni.updateOne({ _id :userID }, { $set : updateFields });
-    const user = await Alumni.findById(userID);
+    await User.updateOne({ _id :userID }, { $set : updateFields });
+    const user = await User.findById(userID);
     res.status(200).json(user);
 })
 
@@ -113,7 +137,7 @@ exports.updateAchievements = catchAsyncError(async (req, res) => {
         achievements : req.body
     };
 
-    await Alumni.updateOne({ _id :userID }, { $set : updateFields });
-    const user = await Alumni.findById(userID);
+    await User.updateOne({ _id :userID }, { $set : updateFields });
+    const user = await User.findById(userID);
     res.status(200).json(user);
 })
