@@ -33,6 +33,7 @@ cloudinary.config({
 // Routes
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
+const eventsRoute = require("./routes/events");
 const errorMiddleware = require('./middlewares/errorMiddleware');
 
 app.use(express.json());
@@ -46,6 +47,9 @@ app.use('/api/auth', authRoute);
 
 // User
 app.use('/api/user', userRoute);
+
+// Events
+app.use('/api/events', eventsRoute);
 
 app.listen(8000, () => {
     console.log('Server running at port 8000');

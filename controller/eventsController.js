@@ -5,16 +5,24 @@ const catchAsyncError = require("../middlewares/catchAsyncError");
 // GET route to retrieve all events
 exports.getAllEvents = catchAsyncError(async (req, res) => {
   const events = await Event.find({});
-  res.json(events);
+  res.status(200).json(events);
 });
 
 // POST route to create a new event
 exports.createEvent = catchAsyncError(async (req, res) => {
   const { title, desc } = req.body;
   const date = new Date();
-  const newEvent = new Event({ title, desc, date });
+  const d = date.getDate();
+  const m = date.getMonth();
+  const y = date.getFullYear();
+  const st = `${d}/${m}/${y}`;
+  const newEvent = new Event({ 
+    title : title,
+    desc : desc,
+    date : st,
+   });
   await newEvent.save();
-  res.json({ message: "Event created successfully", newEvent });
+  res.status(200).json(newEvent);
 });
 
 // GET route to retrieve a specific event by ID
@@ -24,7 +32,7 @@ exports.getEventById = catchAsyncError(async (req, res, next) => {
   if (!event) {
     return next(new ErrorHandler("Event not found", 404));
   } else {
-    res.json(event);
+    res.status(200).json(event);
   }
 });
 
@@ -40,7 +48,7 @@ exports.updateEvent = catchAsyncError(async (req, res) => {
   if (!event) {
     return next(new ErrorHandler("Event not found", 404));
   } else {
-    res.json({ message: "Event updated successfully", event });
+    res.status(200).json({ message: "Event updated successfully", event });
   }
 });
 
@@ -51,6 +59,6 @@ exports.deleteEvent = catchAsyncError(async (req, res) => {
   if (!event) {
     return next(new ErrorHandler("Event not found", 404));
   } else {
-    res.json({ message: "Event deleted successfully", event });
+    res.status(200).json({ message: "Event deleted successfully", event });
   }
 });
