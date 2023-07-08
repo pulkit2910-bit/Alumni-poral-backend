@@ -10,16 +10,11 @@ exports.getAllEvents = catchAsyncError(async (req, res) => {
 
 // POST route to create a new event
 exports.createEvent = catchAsyncError(async (req, res) => {
-  const { title, desc } = req.body;
-  const date = new Date();
-  const d = date.getDate();
-  const m = date.getMonth();
-  const y = date.getFullYear();
-  const st = `${d}/${m}/${y}`;
+  const { title, content, date } = req.body;
   const newEvent = new Event({ 
     title : title,
-    desc : desc,
-    date : st,
+    content : content,
+    date : date,
    });
   await newEvent.save();
   res.status(200).json(newEvent);
@@ -39,11 +34,11 @@ exports.getEventById = catchAsyncError(async (req, res, next) => {
 // PUT route to update a specific event by ID
 exports.updateEvent = catchAsyncError(async (req, res) => {
   const id = req.params.id;
-  const { title, desc } = req.body;
+  const { title, content } = req.body;
   const date = new Date();
   const event = await Event.findByIdAndUpdate(
     id,
-    { title, desc, date }
+    { title, content, date }
   );
   if (!event) {
     return next(new ErrorHandler("Event not found", 404));
