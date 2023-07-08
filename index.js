@@ -32,7 +32,9 @@ cloudinary.config({
 
 // Routes
 const authRoute = require("./routes/auth");
-const userRoute = require("./routes/user");
+const alumniRoute = require("./routes/alumni");
+const current_studentRoute = require("./routes/current_student");
+const outgoing_studentRoute = require("./routes/outgoing_student");
 const eventsRoute = require("./routes/events");
 const errorMiddleware = require('./middlewares/errorMiddleware');
 
@@ -45,8 +47,14 @@ app.use(cookieParser());
 // Auth
 app.use('/api/auth', authRoute);
 
-// User
-app.use('/api/user', userRoute);
+// Alumni
+app.use('/api/alumni', alumniRoute);
+
+// Alumni
+app.use('/api/outgoing_student', outgoing_studentRoute);
+
+// Alumni
+app.use('/api/current_student', current_studentRoute);
 
 // Events
 app.use('/api/events', eventsRoute);

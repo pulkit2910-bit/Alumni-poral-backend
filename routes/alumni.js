@@ -1,22 +1,16 @@
 const router = require('express').Router();
-const { getUser, updateEducation, deleteUser, updateUser, updateExperience, updateContact, updateAchievements, getAllUsers, getAlumni, getCurrStudents, getOutgoingStudents } = require('../controller/userController');
+const { getUser, updateEducation, deleteUser, updateUser, updateExperience, updateContact, updateAchievements, getAllUsers, getAlumni } = require('../controller/alumniController');
 const { verifyUser } = require("../middlewares/authMiddleware");
 const { singleUpload } = require("../middlewares/multer");
 
 // get a user
-router.get('/', verifyUser, getUser);
+// router.get('/', verifyUser, getUser);
 
 // get all alumnis
-router.get('/alumni', verifyUser, getAlumni);
-
-// get all current students
-router.get('/current-students', verifyUser, getCurrStudents);
-
-// get all outgoing students
-router.get('/outgoing-students', verifyUser, getOutgoingStudents);
+router.get('/', verifyUser, getAlumni);
 
 // get all users
-router.get('/search', verifyUser, getAllUsers);
+router.get('/search', verifyUser, getAlumni);
 
 // delete user
 router.delete('/delete/:userID', verifyUser, deleteUser);

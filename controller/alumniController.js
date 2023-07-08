@@ -4,14 +4,14 @@ const catchAsyncError = require("../middlewares/catchAsyncError");
 const { getDataUri } = require("../utils/dataUri");
 const cloudinary = require("cloudinary");
 
-exports.getUser = catchAsyncError(async (req, res, next) => {
-    const user = await User.findById(req.query.userID);
-    if (!user) {
-        return next(new ErrorHandler("User not found", 404));
-    }
+// exports.getUser = catchAsyncError(async (req, res, next) => {
+//     const user = await User.findById(req.query.userID);
+//     if (!user) {
+//         return next(new ErrorHandler("User not found", 404));
+//     }
 
-    res.status(200).json(user);
-})
+//     res.status(200).json(user);
+// })
 
 exports.getAlumni = catchAsyncError(async (req, res) => {
     const perPage = 10; // 50
@@ -21,30 +21,14 @@ exports.getAlumni = catchAsyncError(async (req, res) => {
     res.status(200).json(users);
 })
 
-exports.getCurrStudents = catchAsyncError(async (req, res) => {
-    const perPage = 10; // 50
-    const pageNumber = req.query.page;
-    const skipPages = perPage * (pageNumber-1);
-    const users = await User.find({ role: 'current_students' }).sort({ name : "asc" }).limit(perPage).skip(skipPages);
-    res.status(200).json(users);
-})
+// exports.getAllUsers = catchAsyncError(async (req, res, next) => {
+//     const perPage = 10; // 50
+//     const pageNumber = req.query.page;
+//     const skipPages = perPage * (pageNumber-1);
+//     const users = await User.find().sort({ name : "asc" }).limit(perPage).skip(skipPages);
 
-exports.getOutgoingStudents = catchAsyncError(async (req, res) => {
-    const perPage = 10; // 50
-    const pageNumber = req.query.page;
-    const skipPages = perPage * (pageNumber-1);
-    const users = await User.find({ role: 'outgoing_students' }).sort({ name : "asc" }).limit(perPage).skip(skipPages);
-    res.status(200).json(users);
-})
-
-exports.getAllUsers = catchAsyncError(async (req, res, next) => {
-    const perPage = 10; // 50
-    const pageNumber = req.query.page;
-    const skipPages = perPage * (pageNumber-1);
-    const users = await User.find().sort({ name : "asc" }).limit(perPage).skip(skipPages);
-
-    res.status(200).json(users);
-})
+//     res.status(200).json(users);
+// })
 
 exports.deleteUser = catchAsyncError(async (req, res) => {
     if (req.data.userID === req.params.userID) {
