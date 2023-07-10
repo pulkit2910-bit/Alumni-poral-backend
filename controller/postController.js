@@ -83,26 +83,8 @@ const userFeed = async (req, res) => {
     if (req.data.userID === req.params.userID) {
 
         try {
-            const user = await User.findById(req.data.userID);
-
-            var userPosts = await Post.find({ userID : req.params.userID });
-
-            const friendPosts = await Promise.all(
-                user.following.map((friendID) => {
-                    return Post.find({ userID : friendID });
-                })
-            );
-
-            // console.log(friendPosts);
-            
-            const data = [];
-            userPosts.map((post) => { data.push(post); });
-            friendPosts.map((friends) => {
-                friends.map((p) => data.push(p));
-            })
-            // console.log(data);
+            const data = await Post.find({});
             res.status(200).json(data);
-    
         } catch (err) {
             res.status(500).json(err);
         }

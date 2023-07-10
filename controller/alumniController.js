@@ -4,15 +4,6 @@ const catchAsyncError = require("../middlewares/catchAsyncError");
 const { getDataUri } = require("../utils/dataUri");
 const cloudinary = require("cloudinary");
 
-// exports.getUser = catchAsyncError(async (req, res, next) => {
-//     const user = await User.findById(req.query.userID);
-//     if (!user) {
-//         return next(new ErrorHandler("User not found", 404));
-//     }
-
-//     res.status(200).json(user);
-// })
-
 exports.getAlumni = catchAsyncError(async (req, res) => {
     const perPage = 10; // 50
     const pageNumber = req.query.page;

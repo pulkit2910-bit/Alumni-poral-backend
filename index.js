@@ -32,6 +32,8 @@ cloudinary.config({
 
 // Routes
 const authRoute = require("./routes/auth");
+const userRoute = require("./routes/user");
+const postRoute = require("./routes/posts");
 const alumniRoute = require("./routes/alumni");
 const current_studentRoute = require("./routes/current_student");
 const outgoing_studentRoute = require("./routes/outgoing_student");
@@ -47,8 +49,14 @@ app.use(cookieParser());
 // Auth
 app.use('/api/auth', authRoute);
 
+// Post
+app.use('/api/posts', postRoute);
+
 // Alumni
 app.use('/api/alumni', alumniRoute);
+
+// All users
+app.use('/api/user', userRoute);
 
 // outgoing students
 app.use('/api/outgoing_student', outgoing_studentRoute);
