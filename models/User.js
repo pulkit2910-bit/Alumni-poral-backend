@@ -21,54 +21,62 @@ const UserSchema = mongoose.Schema(
               default: "https://res.cloudinary.com/dyjrkaa4n/image/upload/v1687263844/blank-profile-picture-973460_1280_eq15zs.png"
             }
         },
-        student_achievements : [
-            {
-                title : {
-                    type : String,
-                },
-                desc : {
-                    type : String,
-                },
-                public_id : {
-                    type : String,
-                },
-                url : {
-                    type : String,
-                }
+        student_achievements : [{
+            title : {
+                type : String,
+            },
+            desc : {
+                type : String,
+            },
+            public_id : {
+                type : String,
+            },
+            url : {
+                type : String,
             }
-        ],
-        student_activities : [
-            {
-                title : {
-                    type : String,
-                },
-                desc : {
-                    type : String,
-                },
-                public_id : {
-                    type : String,
-                },
-                url : {
-                    type : String,
-                }
+        }],
+        student_activities : [{
+            title : {
+                type : String,
+            },
+            desc : {
+                type : String,
+            },
+            public_id : {
+                type : String,
+            },
+            url : {
+                type : String,
             }
-        ],
-        student_projects : [
-            {
-                title : {
-                    type : String,
-                },
-                desc : {
-                    type : String,
-                },
-                public_id : {
-                    type : String,
-                },
-                url : {
-                    type : String,
-                }
+        }],
+        student_projects : [{
+            title : {
+                type : String,
+            },
+            desc : {
+                type : String,
+            },
+            public_id : {
+                type : String,
+            },
+            url : {
+                type : String,
             }
-        ],
+        }],
+        placement_details : [{
+            title : {
+                type : String,
+            },
+            desc : {
+                type : String,
+            },
+            public_id : {
+                type : String,
+            },
+            url : {
+                type : String,
+            }
+        }],
         email : {
             type : String,
             required : true,
