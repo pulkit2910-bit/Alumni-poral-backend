@@ -11,3 +11,7 @@ exports.getOutgoingStudents = catchAsyncError(async (req, res) => {
     const users = await User.find({ role: 'outgoing_students' }).sort({ name : "asc" }).limit(perPage).skip(skipPages);
     res.status(200).json(users);
 })
+
+// exports.uploadPlacementDocs = catchAsyncError(async (req, res) => {
+
+// })

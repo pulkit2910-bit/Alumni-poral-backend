@@ -50,10 +50,10 @@ app.use('/api/auth', authRoute);
 // Alumni
 app.use('/api/alumni', alumniRoute);
 
-// Alumni
+// outgoing students
 app.use('/api/outgoing_student', outgoing_studentRoute);
 
-// Alumni
+// current students
 app.use('/api/current_student', current_studentRoute);
 
 // Events
