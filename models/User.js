@@ -28,10 +28,7 @@ const UserSchema = mongoose.Schema(
             desc : {
                 type : String,
             },
-            public_id : {
-                type : String,
-            },
-            url : {
+            link : {
                 type : String,
             }
         }],
@@ -42,10 +39,7 @@ const UserSchema = mongoose.Schema(
             desc : {
                 type : String,
             },
-            public_id : {
-                type : String,
-            },
-            url : {
+            link : {
                 type : String,
             }
         }],
@@ -56,27 +50,21 @@ const UserSchema = mongoose.Schema(
             desc : {
                 type : String,
             },
-            public_id : {
-                type : String,
-            },
-            url : {
+            link : {
                 type : String,
             }
         }],
-        placement_details : [{
-            title : {
-                type : String,
-            },
-            desc : {
-                type : String,
-            },
-            public_id : {
-                type : String,
-            },
-            url : {
-                type : String,
-            }
-        }],
+        // placement_details : [{
+        //     title : {
+        //         type : String,
+        //     },
+        //     desc : {
+        //         type : String,
+        //     },
+        //     link : {
+        //         type : String,
+        //     }
+        // }],
         email : {
             type : String,
             required : true,
