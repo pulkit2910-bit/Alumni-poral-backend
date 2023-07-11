@@ -22,49 +22,47 @@ const UserSchema = mongoose.Schema(
             }
         },
         student_achievements : [{
-            title : {
-                type : String,
-            },
-            desc : {
-                type : String,
-            },
-            link : {
-                type : String,
-            }
+            title : { type : String },
+            desc : { type : String },
+            link : { type : String }
         }],
         student_activities : [{
-            title : {
-                type : String,
-            },
-            desc : {
-                type : String,
-            },
-            link : {
-                type : String,
-            }
+            title : { type : String },
+            desc : { type : String },
+            link : { type : String }
         }],
         student_projects : [{
-            title : {
-                type : String,
-            },
-            desc : {
-                type : String,
-            },
-            link : {
-                type : String,
-            }
+            title : { type : String },
+            desc : { type : String },
+            link : { type : String }
         }],
-        // placement_details : [{
-        //     title : {
-        //         type : String,
-        //     },
-        //     desc : {
-        //         type : String,
-        //     },
-        //     link : {
-        //         type : String,
-        //     }
-        // }],
+        student_job_offers : [{
+            company : { type : String },
+            role : { type : String },
+            ctc : { type : Number },
+            offerType : { type : String },
+            link : { type : String }
+        }],
+        student_job_experiences : [{
+            company : { type : String },
+            role : { type : String },
+            startDate : { type : Date },
+            endDate : { type : Date },
+            desc : { type : String },
+            link : { type : String }
+        }],
+        student_competitive_exams : [{
+            name : { type : String },
+            result : { type : String },
+            desc : { type : String },
+            link : { type : String },
+        }],
+        student_higher_studies : [{
+            institution : { type : String },
+            degree : { type : String },
+            desc : { type : String },
+            link : { type : String },
+        }],
         email : {
             type : String,
             required : true,
