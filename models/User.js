@@ -52,7 +52,7 @@ const UserSchema = mongoose.Schema(
             link : { type : String }
         }],
         student_competitive_exams : [{
-            name : { type : String },
+            examName : { type : String },
             result : { type : String },
             desc : { type : String },
             link : { type : String },
