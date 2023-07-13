@@ -2,6 +2,7 @@ const Post = require('../models/Post');
 const User = require('../models/User');
 const { getDataUri } = require('../utils/dataUri');
 const cloudinary = require('cloudinary');
+const ErrorHandler = require('../utils/errorHandler');
 
 const createPost = async (req, res) => {
     const userID = req.data.userID;
@@ -44,14 +45,19 @@ const updatePost = async (req, res) => {
     }
 }
 
-const deletePost = async (req, res) => {
-    const userID = req.data.userID;
+const deletePost = async (req, res, next) => {
     
     try {
+        const userID = req.data.userID;
+        const user = await User.findById(userID);
+        if (!user) {
+            return next(new ErrorHandler("User Not found", 404));
+        }
+
         const post = await Post.findById(req.params.postID);
         !post && res.status(404).json('Post not found !');
         
-        if (post.userID === userID) {
+        if (post.userID === userID || user.role === "admin") {
             await Post.findByIdAndDelete(req.params.postID);
             res.status(200).json('Post deleted !!');
         } else {
@@ -63,7 +69,32 @@ const deletePost = async (req, res) => {
     }
 }
 
+const likePost = async (req, res) => {
+    try {
+        const userID = req.data.userID;
 
+        const post = await Post.findById(req.params.postID);
+        !post && res.status(404).json('Post not found !!');
+
+        if (!post.likes.includes(userID)) { // then like the post
+            await post.updateOne({
+                $push : { likes : userID }
+            })
+            res.status(200).json('You liked this post !!');
+
+        } else { // dislike the post
+
+            await post.updateOne({
+                $pull : { likes : userID }
+            })
+            res.status(200).json('You disliked this post !!');
+        }
+
+    } catch(err) {
+        res.status(500).json(err);
+    }
+
+}
 
 const getPost = async (req, res) => {
     try {
@@ -75,8 +106,6 @@ const getPost = async (req, res) => {
         res.status(500).json(err);
     }
 }
-
-
 
 const userFeed = async (req, res) => {
     
@@ -113,4 +142,4 @@ const getAllUserPosts = async (req, res) => {
 }
 
 
-module.exports = { createPost, updatePost, deletePost, getPost, userFeed, getAllUserPosts };
+module.exports = { createPost, updatePost, deletePost, likePost, getPost, userFeed, getAllUserPosts };
