@@ -1,8 +1,6 @@
 const User = require("../models/User");
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncError = require("../middlewares/catchAsyncError");
-const { getDataUri } = require("../utils/dataUri");
-const cloudinary = require("cloudinary");
 
 exports.getAlumni = catchAsyncError(async (req, res) => {
     const perPage = 10; // 50

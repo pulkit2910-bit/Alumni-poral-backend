@@ -14,6 +14,15 @@ exports.getUser = catchAsyncError(async (req, res, next) => {
     res.status(200).json(user);
 });
 
+// get all students
+exports.getAllStudents = catchAsyncError(async (req, res) => {
+    const perPage = 10; // 50
+    const pageNumber = req.query.page;
+    const skipPages = perPage * (pageNumber-1);
+    const users = await User.find({"$or" : [{ role : "current_student" }, { role : "outgoing_student" }]}).sort({ name : "asc" }).limit(perPage).skip(skipPages);
+    res.status(200).json(users);
+})
+
 // update contact details
 exports.updateContact = catchAsyncError(async (req, res) => {
     const userID = req.data.userID;

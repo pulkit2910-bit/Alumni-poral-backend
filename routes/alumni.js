@@ -3,9 +3,6 @@ const { getUser, updateEducation, deleteUser, updateUser, updateExperience, upda
 const { verifyUser } = require("../middlewares/authMiddleware");
 const { singleUpload } = require("../middlewares/multer");
 
-// get all alumnis
-router.get('/', verifyUser, getAlumni);
-
 // get all users
 router.get('/search', verifyUser, getAlumni);
 
